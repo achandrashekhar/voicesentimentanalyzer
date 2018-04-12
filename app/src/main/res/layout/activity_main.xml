@@ -21,31 +21,38 @@
         <EditText
             android:id="@+id/user_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Say something"
+            android:layout_height="135dp"
+            android:hint="Text will appear here"
             android:lines="3" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/analyze_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_below="@+id/container"
         android:layout_marginBottom="115dp"
-        android:text="Analyze Tone"
+        android:text="Analyze"
         app:layout_constraintBottom_toTopOf="@+id/btnSpeak"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container" />
 
     <TextView
         android:id="@+id/btnSpeak"
-        android:layout_width="305dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="86dp"
-        android:layout_marginStart="28dp"
-        android:text="Tap to Open Mic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="363dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:editable="false"
+        android:paddingStart="8dp"
+        android:paddingTop="10dp"
+        android:text="TAP TO OPEN MIC"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyze_button" />
 
