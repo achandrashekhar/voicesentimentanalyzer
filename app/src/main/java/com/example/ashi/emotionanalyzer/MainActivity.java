@@ -22,7 +22,14 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -31,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
 private TextView speakButton;
 private EditText userInput;
+private EditText participant;
+private static final String FILENAME = "/Users/ashi/Downloads/Results/result.rtf";
 
-private final int REQ_CODE_SPEECH_INPUT = 0;
+
+    private final int REQ_CODE_SPEECH_INPUT = 0;
 
 
     @Override
@@ -43,6 +53,7 @@ private final int REQ_CODE_SPEECH_INPUT = 0;
             //code for Speech to Text
             speakButton = (TextView) findViewById(R.id.btnSpeak);
             userInput = (EditText) findViewById(R.id.user_input);
+            participant = (EditText) findViewById(R.id.participant);
             speakButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -84,15 +95,42 @@ private final int REQ_CODE_SPEECH_INPUT = 0;
                                             .getTones()
                                             .get(0)
                                             .getTones();
-                                    System.out.println("what this "+response.getDocumentTone()
-                                            .getTones()
-                                            .get(0));
+//                                    System.out.println("what this "+response.getDocumentTone()
+//                                            .getTones()
+//                                            .get(0));
                                     String detectedTones = "";
                                     for (ToneScore score : scores) {
-                                        if (score.getScore() > 0.3f) {
+                                        if (score.getScore() >= 0.3f) {
                                             detectedTones += score.getName() + " ";
                                         }
                                     }
+                                    //System.out.println(detectedTones.toUpperCase());
+                                    //System.out.println(userInput.getText());
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("Name:  ");
+                                    sb.append(participant.getText());
+                                    sb.append("\n");
+                                    sb.append("Response:\n");
+                                    sb.append(userInput.getText());
+                                    sb.append("\n");
+                                    sb.append(response.getDocumentTone()
+                                            .getTones()
+                                            .get(0));
+                                    sb.append("\n");
+                                    sb.append(detectedTones.toUpperCase());
+                                    sb.append("\n");
+                                    sb.toString();
+                                    System.out.println(sb.toString());
+                                    Socket socket = null;
+                                    try {
+                                        socket = new Socket("10.10.34.245",1755);
+                                        DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
+                                        DOS.writeUTF(sb.toString());
+                                        socket.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
 
                                     final String toastMessage =
                                             "The following emotions were detected:\n\n"
