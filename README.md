@@ -24,3 +24,13 @@ https://www.ibm.com/watson/developercloud/tone-analyzer/api/v3/curl.html?curl#in
 All of the code is written in Java for both the android app and the server.
 
 
+
+The statistical analysis is carried out in Python version 3.
+
+Wilcoxon signed-rank test and Chi Square test are performed on the data.
+
+The datasets used for the tests are the encoded values of emotions from the user survey.
+
+Joy : 1, Sadness : 2, Anger : 3, Disgust : 4, Fear : 5
+
+"accuracy_score" and "confusion_matrix" APIs from sklearn.metrics package are used to measure accuracy and check the confusion matrix respectively.
